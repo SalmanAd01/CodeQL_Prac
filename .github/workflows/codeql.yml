@@ -51,3 +51,10 @@ jobs:
         with:
           name: codeql-reports
           path: ${{ runner.workspace }}/codeql_databases/
+
+      - name: Validate SARIF File
+        run: |
+          wget -O sarif-validator.zip https://github.com/microsoft/sarif-sdk/releases/download/21.8.1/sarif-sdk-21.8.1-linux-x64.zip
+          unzip sarif-validator.zip
+          chmod +x sarif-validator
+          ./sarif-validator -q -j ${{ runner.workspace }}/codeql_databases/sarif-output-file.sarif
